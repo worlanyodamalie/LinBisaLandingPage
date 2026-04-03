@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 
+const base = import.meta.env.BASE_URL
+
 export default function About() {
   const ref = useRef(null)
 
@@ -32,7 +34,7 @@ export default function About() {
           {/* Photo */}
           <div className="relative">
             <img
-              src="/images/hero.jpeg"
+              src={`${base}images/hero.jpeg`}
               alt="Linbisa Prime LLC project"
               className="aspect-[4/3] rounded-xl object-cover w-full"
             />

@@ -1,16 +1,18 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 
+const base = import.meta.env.BASE_URL
+
 const images = [
-  { label: 'Kitchen Remodel', src: '/images/kitchen-1.jpeg' },
-  { label: 'Gourmet Kitchen', src: '/images/kitchen-2.jpeg' },
-  { label: 'Living Room', src: '/images/living-1.jpeg' },
-  { label: 'Master Bedroom', src: '/images/bedroom-1.jpeg' },
-  { label: 'Modern Kitchen', src: '/images/kitchen-3.jpeg' },
-  { label: 'Family Room', src: '/images/living-2.jpeg' },
-  { label: 'Cozy Living', src: '/images/living-3.jpeg' },
-  { label: 'Guest Bedroom', src: '/images/bedroom-2.jpeg' },
-  { label: 'Basement Lounge', src: '/images/basement.jpeg' },
-  { label: 'Dining Room', src: '/images/dining.jpeg' },
+  { label: 'Kitchen Remodel', src: `${base}images/kitchen-1.jpeg` },
+  { label: 'Gourmet Kitchen', src: `${base}images/kitchen-2.jpeg` },
+  { label: 'Living Room', src: `${base}images/living-1.jpeg` },
+  { label: 'Master Bedroom', src: `${base}images/bedroom-1.jpeg` },
+  { label: 'Modern Kitchen', src: `${base}images/kitchen-3.jpeg` },
+  { label: 'Family Room', src: `${base}images/living-2.jpeg` },
+  { label: 'Cozy Living', src: `${base}images/living-3.jpeg` },
+  { label: 'Guest Bedroom', src: `${base}images/bedroom-2.jpeg` },
+  { label: 'Basement Lounge', src: `${base}images/basement.jpeg` },
+  { label: 'Dining Room', src: `${base}images/dining.jpeg` },
 ]
 
 const items = [

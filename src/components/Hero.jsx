@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 
+const base = import.meta.env.BASE_URL
+
 export default function Hero() {
   const ref = useRef(null)
 
@@ -23,7 +25,7 @@ export default function Hero() {
     >
       {/* Background image */}
       <img
-        src="/images/hero.jpeg"
+        src={`${base}images/hero.jpeg`}
         alt="Luxury home exterior"
         className="absolute inset-0 w-full h-full object-cover"
       />

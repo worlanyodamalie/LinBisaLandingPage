@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+const base = import.meta.env.BASE_URL
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -35,7 +37,7 @@ export default function Navbar() {
         {/* Logo */}
         <button onClick={() => scrollTo('#hero')} className="flex-shrink-0">
           <img
-            src="/images/logo.png"
+            src={`${base}images/logo.png`}
             alt="Linbisa Prime LLC"
             className="h-20 md:h-24 lg:h-28 w-auto"
           />
