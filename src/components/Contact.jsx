@@ -1,14 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useForm, ValidationError } from '@formspree/react'
 
 export default function Contact() {
-  const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    message: '',
-  })
-  const [submitted, setSubmitted] = useState(false)
+  const [state, handleSubmit] = useForm('maqlplaw')
   const ref = useRef(null)
 
   useEffect(() => {
@@ -23,11 +17,6 @@ export default function Contact() {
     observer.observe(el)
     return () => observer.disconnect()
   }, [])
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
-  }
 
   return (
     <section id="contact" className="bg-navy py-20 md:py-28">
@@ -68,7 +57,6 @@ export default function Contact() {
 
             {/* Social icons */}
             <div className="flex gap-4 mt-8">
-              {/* LinkedIn */}
               <a
                 href="#"
                 aria-label="LinkedIn"
@@ -78,7 +66,6 @@ export default function Contact() {
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
               </a>
-              {/* Instagram */}
               <a
                 href="#"
                 aria-label="Instagram"
@@ -93,7 +80,7 @@ export default function Contact() {
 
           {/* Right — form */}
           <div className="bg-white rounded-lg p-8">
-            {submitted ? (
+            {state.succeeded ? (
               <div className="flex flex-col items-center gap-4 py-8 text-center">
                 <div className="w-14 h-14 bg-gold rounded-full flex items-center justify-center">
                   <svg className="w-6 h-6 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -107,62 +94,59 @@ export default function Contact() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-slate mb-1.5">First Name</label>
+                    <label className="block text-xs font-medium text-slate mb-1.5">First Name *</label>
                     <input
                       type="text"
-                      placeholder="John"
-                      value={form.firstName}
-                      onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+                      name="firstName"
+                      required
                       className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
                     />
+                    <ValidationError field="firstName" errors={state.errors} className="text-red-500 text-xs mt-1" />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate mb-1.5">Last Name</label>
+                    <label className="block text-xs font-medium text-slate mb-1.5">Last Name *</label>
                     <input
                       type="text"
-                      placeholder="Doe"
-                      value={form.lastName}
-                      onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                      name="lastName"
+                      required
                       className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
                     />
+                    <ValidationError field="lastName" errors={state.errors} className="text-red-500 text-xs mt-1" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-slate mb-1.5">Email *</label>
                   <input
                     type="email"
-                    placeholder="john@example.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    name="email"
                     required
                     className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
                   />
+                  <ValidationError field="email" errors={state.errors} className="text-red-500 text-xs mt-1" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-slate mb-1.5">Phone</label>
                   <input
                     type="tel"
-                    placeholder="+1 (000) 000-0000"
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    name="phone"
                     className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-slate mb-1.5">Message</label>
                   <textarea
+                    name="message"
                     rows={4}
-                    placeholder="Tell us about your project..."
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors resize-none"
                   />
+                  <ValidationError field="message" errors={state.errors} className="text-red-500 text-xs mt-1" />
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3 bg-gold text-white font-medium text-sm rounded-md hover:bg-gold-light active:scale-[0.98] transition-all duration-300"
+                  disabled={state.submitting}
+                  className="w-full py-3 bg-gold text-white font-medium text-sm rounded-md hover:bg-gold-light active:scale-[0.98] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {state.submitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             )}
