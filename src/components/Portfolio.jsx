@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 
 const base = import.meta.env.BASE_URL
 
@@ -25,37 +25,17 @@ const items = [
 ]
 
 export default function Portfolio() {
-  const [current, setCurrent] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const [slidesPerView, setSlidesPerView] = useState(3)
   const sectionRef = useRef(null)
+  const scrollRef = useRef(null)
 
-  const totalSlides = images.length
-  const maxIndex = Math.max(0, totalSlides - slidesPerView)
-
-  useEffect(() => {
-    const updateSlidesPerView = () => {
-      setSlidesPerView(window.innerWidth >= 768 ? 3 : 1)
-    }
-    updateSlidesPerView()
-    window.addEventListener('resize', updateSlidesPerView)
-    return () => window.removeEventListener('resize', updateSlidesPerView)
+  const scroll = useCallback((direction) => {
+    const el = scrollRef.current
+    if (!el) return
+    const amount = 400
+    el.scrollBy({ left: direction * amount, behavior: 'smooth' })
   }, [])
 
-  const next = useCallback(() => {
-    setCurrent((prev) => (prev >= maxIndex ? 0 : prev + 1))
-  }, [maxIndex])
-
-  const prev = useCallback(() => {
-    setCurrent((prev) => (prev <= 0 ? maxIndex : prev - 1))
-  }, [maxIndex])
-
-  useEffect(() => {
-    if (!isAutoPlaying) return
-    const interval = setInterval(next, 3500)
-    return () => clearInterval(interval)
-  }, [isAutoPlaying, next])
-
+  // Fade-in observer
   useEffect(() => {
     const el = sectionRef.current
     if (!el) return
@@ -70,97 +50,72 @@ export default function Portfolio() {
   }, [])
 
   return (
-    <section id="portfolio" className="bg-cream py-20 md:py-28">
+    <section id="portfolio" className="bg-cream py-20 md:py-28 overflow-hidden">
+      {/* Heading */}
       <div
         ref={sectionRef}
-        className="max-w-7xl mx-auto px-6 lg:px-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
+        className="max-w-7xl mx-auto px-6 lg:px-12 text-center mb-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
-        {/* Heading */}
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-charcoal mb-3">
-            Projects / Portfolio
-          </h2>
-          <p className="text-slate text-base md:text-lg font-light">
-            Crafted spaces. Proven results.
-          </p>
-        </div>
+        <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-charcoal mb-3">
+          Projects / Portfolio
+        </h2>
+        <p className="text-slate text-base md:text-lg font-light">
+          Crafted spaces. Proven results.
+        </p>
+      </div>
 
-        {/* Carousel */}
+      {/* Scrolling image strip */}
+      <div className="relative mb-16">
         <div
-          className="relative mb-12"
-          onMouseEnter={() => setIsAutoPlaying(false)}
-          onMouseLeave={() => setIsAutoPlaying(true)}
+          ref={scrollRef}
+          className="flex overflow-x-hidden"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          <div className="overflow-hidden rounded-lg">
+          {[...images, ...images].map((img, i) => (
             <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(-${current * (100 / slidesPerView)}%)`,
-              }}
+              key={i}
+              className="relative flex-shrink-0 w-72 h-72 md:w-96 md:h-80 lg:w-[28rem] lg:h-96 overflow-hidden"
             >
-              {images.map((img, i) => (
-                <div
-                  key={i}
-                  className="flex-shrink-0 px-2"
-                  style={{ width: `${100 / slidesPerView}%` }}
-                >
-                  <div className="relative h-64 md:h-80 lg:h-96 rounded-lg overflow-hidden group cursor-pointer">
-                    <img
-                      src={img.src}
-                      alt={img.label}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
-                      <p className="font-display text-white text-lg md:text-xl">{img.label}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Nav arrows */}
-          <button
-            onClick={prev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 md:-translate-x-5 w-10 h-10 md:w-12 md:h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-charcoal hover:bg-gold hover:text-white transition-all duration-300 z-10"
-            aria-label="Previous slide"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <button
-            onClick={next}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 md:translate-x-5 w-10 h-10 md:w-12 md:h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-charcoal hover:bg-gold hover:text-white transition-all duration-300 z-10"
-            aria-label="Next slide"
-          >
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-
-          {/* Dots */}
-          <div className="flex justify-center gap-2 mt-6">
-            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${
-                  i === current ? 'bg-gold w-8' : 'bg-gray-300 hover:bg-gray-400 w-2.5'
-                }`}
-                aria-label={`Go to slide ${i + 1}`}
+              <img
+                src={img.src}
+                alt={img.label}
+                className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
-            ))}
-          </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+              <p className="absolute bottom-4 left-5 font-display text-white text-lg opacity-0 hover:opacity-100 transition-opacity duration-300 drop-shadow-lg">
+                {img.label}
+              </p>
+            </div>
+          ))}
         </div>
 
-        {/* Description */}
+        {/* Arrows — vertically centered at left/right edges */}
+        <button
+          onClick={() => scroll(-1)}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center text-charcoal hover:bg-gold hover:text-white transition-all duration-300 z-10"
+          aria-label="Scroll left"
+        >
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button
+          onClick={() => scroll(1)}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm shadow-lg rounded-full flex items-center justify-center text-charcoal hover:bg-gold hover:text-white transition-all duration-300 z-10"
+          aria-label="Scroll right"
+        >
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Description + items */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <p className="text-slate text-base md:text-lg text-center mb-8 font-light">
           We deliver a range of residential projects including:
         </p>
 
-        {/* Items grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto mb-10">
           {items.map((item, i) => (
             <div
@@ -173,7 +128,6 @@ export default function Portfolio() {
           ))}
         </div>
 
-        {/* Italic quote */}
         <p className="text-center font-display italic text-gold text-base md:text-lg">
           Every project is built with a focus on design, quality, and lasting value.
         </p>

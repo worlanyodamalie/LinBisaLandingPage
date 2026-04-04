@@ -59,12 +59,6 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full" />
             </button>
           ))}
-          <button
-            onClick={() => scrollTo('#contact')}
-            className="px-5 py-2.5 bg-gold text-white text-sm font-medium rounded hover:bg-gold-light transition-all duration-300"
-          >
-            Get a Quote
-          </button>
         </div>
 
         {/* Hamburger */}
@@ -109,12 +103,6 @@ export default function Navbar() {
               {label}
             </button>
           ))}
-          <button
-            onClick={() => scrollTo('#contact')}
-            className="self-start px-5 py-2.5 bg-gold text-white text-sm font-medium rounded hover:bg-gold-light transition-all duration-300"
-          >
-            Get a Quote
-          </button>
         </div>
       </div>
     </nav>
