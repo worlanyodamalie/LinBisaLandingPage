@@ -78,8 +78,8 @@ export default function Contact() {
             <div className="space-y-4 text-sm">
               <p className="text-muted">
                 <span className="text-white font-medium">Email: </span>
-                <a href="mailto:info@linbisaprime.com" className="hover:text-gold transition-colors">
-                  info@linbisaprime.com
+                <a href="mailto:linbisaprimellc@gmail.com" className="hover:text-gold transition-colors">
+                  linbisaprimellc@gmail.com
                 </a>
               </p>
               <p className="text-muted">
