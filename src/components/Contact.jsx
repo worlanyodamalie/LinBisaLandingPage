@@ -1,8 +1,18 @@
-import { useEffect, useRef } from 'react'
-import { useForm, ValidationError } from '@formspree/react'
+import { useState, useEffect, useRef } from 'react'
+
+const GOOGLE_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLScQpzx1nq0S0BLFhIUHKaxAh1aFfHYA2VHnSCJcsL2XKFIagA/formResponse'
 
 export default function Contact() {
-  const [state, handleSubmit] = useForm('maqlplaw')
+  const [form, setForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: '',
+  })
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -17,6 +27,31 @@ export default function Contact() {
     observer.observe(el)
     return () => observer.disconnect()
   }, [])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setSubmitting(true)
+
+    const formData = new FormData()
+    formData.append('entry.473318395', form.firstName)
+    formData.append('entry.1647960025', form.lastName)
+    formData.append('entry.1401163659', form.email)
+    formData.append('entry.811945873', form.phone)
+    formData.append('entry.1790300408', form.message)
+
+    try {
+      await fetch(GOOGLE_FORM_URL, {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors',
+      })
+    } catch {
+      // Google Forms returns opaque response with no-cors, this is expected
+    }
+
+    setSubmitting(false)
+    setSubmitted(true)
+  }
 
   return (
     <section id="contact" className="bg-navy py-20 md:py-28">
@@ -84,7 +119,7 @@ export default function Contact() {
 
           {/* Right — form */}
           <div className="bg-white rounded-lg p-8">
-            {state.succeeded ? (
+            {submitted ? (
               <div className="flex flex-col items-center gap-4 py-8 text-center">
                 <div className="w-14 h-14 bg-gold rounded-full flex items-center justify-center">
                   <svg className="w-6 h-6 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -101,56 +136,57 @@ export default function Contact() {
                     <label className="block text-xs font-medium text-slate mb-1.5">First Name *</label>
                     <input
                       type="text"
-                      name="firstName"
+                      value={form.firstName}
+                      onChange={(e) => setForm({ ...form, firstName: e.target.value })}
                       required
                       className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
                     />
-                    <ValidationError field="firstName" errors={state.errors} className="text-red-500 text-xs mt-1" />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-slate mb-1.5">Last Name *</label>
                     <input
                       type="text"
-                      name="lastName"
+                      value={form.lastName}
+                      onChange={(e) => setForm({ ...form, lastName: e.target.value })}
                       required
                       className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
                     />
-                    <ValidationError field="lastName" errors={state.errors} className="text-red-500 text-xs mt-1" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-slate mb-1.5">Email *</label>
                   <input
                     type="email"
-                    name="email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
                     required
                     className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
                   />
-                  <ValidationError field="email" errors={state.errors} className="text-red-500 text-xs mt-1" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-slate mb-1.5">Phone</label>
                   <input
                     type="tel"
-                    name="phone"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
                     className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-slate mb-1.5">Message</label>
                   <textarea
-                    name="message"
                     rows={4}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors resize-none"
                   />
-                  <ValidationError field="message" errors={state.errors} className="text-red-500 text-xs mt-1" />
                 </div>
                 <button
                   type="submit"
-                  disabled={state.submitting}
+                  disabled={submitting}
                   className="w-full py-3 bg-gold text-white font-medium text-sm rounded-md hover:bg-gold-light active:scale-[0.98] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {state.submitting ? 'Sending...' : 'Send Message'}
+                  {submitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             )}
