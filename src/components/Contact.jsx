@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 
-const GOOGLE_FORM_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLScQpzx1nq0S0BLFhIUHKaxAh1aFfHYA2VHnSCJcsL2XKFIagA/formResponse'
+const SHEET_URL =
+  'https://script.google.com/macros/s/AKfycbxbGp_saM49ZQDd9hhPS4_0WUO-L3mXRcAmRRftltfxnUzJqQOuSb_DdzuxyYFfxITDUw/exec'
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -32,21 +32,20 @@ export default function Contact() {
     e.preventDefault()
     setSubmitting(true)
 
-    const formData = new FormData()
-    formData.append('entry.473318395', form.firstName)
-    formData.append('entry.1647960025', form.lastName)
-    formData.append('entry.1401163659', form.email)
-    formData.append('entry.811945873', form.phone)
-    formData.append('entry.1790300408', form.message)
-
     try {
-      await fetch(GOOGLE_FORM_URL, {
+      await fetch(SHEET_URL, {
         method: 'POST',
-        body: formData,
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName: form.lastName,
+          email: form.email,
+          phone: form.phone,
+          message: form.message,
+        }),
         mode: 'no-cors',
       })
     } catch {
-      // Google Forms returns opaque response with no-cors, this is expected
+      // no-cors returns opaque response, this is expected
     }
 
     setSubmitting(false)
