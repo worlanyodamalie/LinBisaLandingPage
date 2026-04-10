@@ -58,7 +58,7 @@ export default function Investors() {
   }, [])
 
   return (
-    <section className="bg-navy py-20 md:py-28">
+    <section id="investors" className="bg-navy py-20 md:py-28">
       <div
         ref={ref}
         className="max-w-5xl mx-auto px-6 lg:px-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out"

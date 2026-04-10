@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { trackNavClick } from '../lib/analytics'
 
 const base = import.meta.env.BASE_URL
 
@@ -12,9 +13,10 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollTo = (id) => {
+  const scrollTo = (id, label) => {
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
     setMenuOpen(false)
+    if (label) trackNavClick(label)
   }
 
   const links = [
@@ -35,7 +37,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
         {/* Logo */}
-        <button onClick={() => scrollTo('#hero')} className="flex-shrink-0">
+        <button onClick={() => scrollTo('#hero', 'Logo')} className="flex-shrink-0">
           <img
             src={`${base}images/logo.png`}
             alt="Linbisa Prime LLC"
@@ -48,7 +50,7 @@ export default function Navbar() {
           {links.map(({ label, id }) => (
             <button
               key={id}
-              onClick={() => scrollTo(id)}
+              onClick={() => scrollTo(id, label)}
               className={`text-sm tracking-wide transition-colors duration-300 relative group ${
                 scrolled
                   ? 'text-slate hover:text-charcoal'
@@ -95,7 +97,7 @@ export default function Navbar() {
           {links.map(({ label, id }) => (
             <button
               key={id}
-              onClick={() => scrollTo(id)}
+              onClick={() => scrollTo(id, `${label} (mobile)`)}
               className={`text-left text-sm tracking-wide transition-colors duration-300 ${
                 scrolled ? 'text-slate hover:text-charcoal' : 'text-white/80 hover:text-white'
               }`}

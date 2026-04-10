@@ -17,7 +17,7 @@ export default function Intro() {
   }, [])
 
   return (
-    <section className="bg-cream py-20 md:py-28">
+    <section id="intro" className="bg-cream py-20 md:py-28">
       <div
         ref={ref}
         className="max-w-3xl mx-auto px-6 text-center opacity-0 translate-y-8 transition-all duration-1000 ease-out"

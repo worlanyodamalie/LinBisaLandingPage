@@ -75,7 +75,7 @@ export default function Development() {
   }, [])
 
   return (
-    <section className="bg-cream py-20 md:py-28">
+    <section id="development" className="bg-cream py-20 md:py-28">
       <div
         ref={ref}
         className="max-w-6xl mx-auto px-6 lg:px-12 opacity-0 translate-y-8 transition-all duration-1000 ease-out"

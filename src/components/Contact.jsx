@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { trackFormSubmit } from '../lib/analytics'
 
 const SHEET_URL =
   'https://script.google.com/macros/s/AKfycbxbGp_saM49ZQDd9hhPS4_0WUO-L3mXRcAmRRftltfxnUzJqQOuSb_DdzuxyYFfxITDUw/exec'
@@ -50,6 +51,7 @@ export default function Contact() {
 
     setSubmitting(false)
     setSubmitted(true)
+    trackFormSubmit()
   }
 
   return (
