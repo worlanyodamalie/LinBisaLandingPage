@@ -37,7 +37,7 @@ export default function Hero() {
         ref={ref}
         className="relative z-10 text-center px-6 max-w-3xl mx-auto opacity-0 translate-y-8 transition-all duration-1000 ease-out"
       >
-        <p className="font-display italic text-gold text-sm md:text-base mb-4">
+        <p className="font-display italic text-gold text-base md:text-xl mb-4 font-semibold tracking-wide [text-shadow:0_2px_8px_rgba(0,0,0,0.7)]">
           EcoSmart Luxury Builder
         </p>
         <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-white leading-[1.1] mb-6 font-bold">

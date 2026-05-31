@@ -174,11 +174,12 @@ export default function Contact() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate mb-1.5">Message</label>
+                  <label className="block text-xs font-medium text-slate mb-1.5">Message *</label>
                   <textarea
                     rows={4}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    required
                     className="w-full border border-gray-300 rounded-md px-4 py-2.5 text-sm text-charcoal placeholder:text-gray-400 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors resize-none"
                   />
                 </div>

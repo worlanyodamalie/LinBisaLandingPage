@@ -3,16 +3,10 @@ import { useEffect, useRef, useCallback } from 'react'
 const base = import.meta.env.BASE_URL
 
 const images = [
-  { label: 'Kitchen Remodel', src: `${base}images/kitchen-1.jpeg` },
-  { label: 'Gourmet Kitchen', src: `${base}images/kitchen-2.jpeg` },
-  { label: 'Living Room', src: `${base}images/living-1.jpeg` },
-  { label: 'Master Bedroom', src: `${base}images/bedroom-1.jpeg` },
-  { label: 'Modern Kitchen', src: `${base}images/kitchen-3.jpeg` },
-  { label: 'Family Room', src: `${base}images/living-2.jpeg` },
-  { label: 'Cozy Living', src: `${base}images/living-3.jpeg` },
-  { label: 'Guest Bedroom', src: `${base}images/bedroom-2.jpeg` },
-  { label: 'Basement Lounge', src: `${base}images/basement.jpeg` },
-  { label: 'Dining Room', src: `${base}images/dining.jpeg` },
+  { label: 'Gourmet Kitchen', src: `${base}images/portfolio/771FAB9D-FDBA-4B73-AC69-406F5037AB08.png` },
+  { label: 'Living Room', src: `${base}images/portfolio/7AFAB94C-A805-49A0-B84E-42F10D573159.png` },
+  { label: 'Master Bedroom', src: `${base}images/portfolio/0D3029A4-ABD1-4AC5-A19A-58A3A8FFA7B1.png` },
+  { label: 'Basement Lounge', src: `${base}images/portfolio/42C26BF1-CA43-43AE-9C5F-7DF35310D781.png` },
 ]
 
 const items = [
