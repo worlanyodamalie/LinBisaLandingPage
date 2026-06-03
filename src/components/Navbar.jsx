@@ -39,7 +39,7 @@ export default function Navbar() {
         {/* Logo */}
         <button onClick={() => scrollTo('#hero', 'Logo')} className="flex-shrink-0">
           <img
-            src={`${base}images/logo-mark.png`}
+            src={`${base}images/LINBISA-Logo-2.png`}
             alt="Linbisa Prime LLC"
             className="h-12 md:h-14 lg:h-16 w-auto"
           />

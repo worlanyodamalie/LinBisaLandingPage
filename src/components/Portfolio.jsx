@@ -4,9 +4,6 @@ const base = import.meta.env.BASE_URL
 
 const images = [
   { label: 'Conway Road — Front Elevation', src: `${base}images/portfolio/front-elevation-architectural.jpg` },
-  { label: 'Conway Road — First Floor Plan', src: `${base}images/portfolio/first-floor-plan.PNG` },
-  { label: 'Conway Road — Second Floor Plan', src: `${base}images/portfolio/second-floor.PNG` },
-  { label: 'Conway Road — Basement Plan', src: `${base}images/portfolio/basement-floorplan.PNG` },
   { label: 'Gourmet Kitchen', src: `${base}images/portfolio/771FAB9D-FDBA-4B73-AC69-406F5037AB08.png` },
   { label: 'Living Room', src: `${base}images/portfolio/7AFAB94C-A805-49A0-B84E-42F10D573159.png` },
   { label: 'Master Bedroom', src: `${base}images/portfolio/0D3029A4-ABD1-4AC5-A19A-58A3A8FFA7B1.png` },
