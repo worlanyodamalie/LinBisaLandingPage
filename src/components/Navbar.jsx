@@ -35,13 +35,13 @@ export default function Navbar() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
         {/* Logo */}
         <button onClick={() => scrollTo('#hero', 'Logo')} className="flex-shrink-0">
           <img
-            src={`${base}images/LINBISA-Logo-2.png`}
+            src={`${base}images/LINBISA-Logo-2-transparent.png`}
             alt="Linbisa Prime LLC"
-            className="h-12 md:h-14 lg:h-16 w-auto"
+            className="h-16 md:h-20 lg:h-24 w-auto"
           />
         </button>
 
