@@ -11,6 +11,7 @@ import Investors from './components/Investors'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import LeadModal from './components/LeadModal'
 import { trackSectionView } from './lib/analytics'
 
 export default function App() {
@@ -50,6 +51,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <LeadModal />
     </div>
   )
 }

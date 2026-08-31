@@ -27,3 +27,25 @@ export function trackFormSubmit() {
     event_label: 'contact_form',
   })
 }
+
+// Track the homepage lead-generation modal
+export function trackLeadModalOpen() {
+  trackEvent('lead_modal_open', {
+    event_category: 'engagement',
+    event_label: 'listings_modal',
+  })
+}
+
+export function trackLeadModalClose() {
+  trackEvent('lead_modal_close', {
+    event_category: 'engagement',
+    event_label: 'listings_modal',
+  })
+}
+
+export function trackLeadModalSubmit() {
+  trackEvent('form_submit', {
+    event_category: 'engagement',
+    event_label: 'listings_modal',
+  })
+}
